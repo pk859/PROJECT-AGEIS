@@ -1,0 +1,89 @@
+:root {
+    --primary: #00f2ff;
+    --alert: #ff0040;
+    --bg-dark: #000;
+    --panel-bg: rgba(5, 10, 15, 0.65);
+    --font-head: 'Rajdhani', sans-serif;
+    --font-code: 'Share Tech Mono', monospace;
+}
+
+body {
+    margin: 0; padding: 0;
+    background: var(--bg-dark);
+    font-family: var(--font-head);
+    height: 100vh; overflow: hidden;
+    color: white;
+    display: flex; justify-content: center; align-items: center;
+}
+
+/* Background Video Re-Use */
+#bg-video {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    min-width: 100%; min-height: 100%; width: auto; height: auto;
+    z-index: -2; opacity: 0.6;
+}
+.scan-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 0%, #000 150%);
+    z-index: -1; pointer-events: none;
+}
+
+/* Login Container */
+.login-container {
+    text-align: center;
+    width: 400px;
+    z-index: 10;
+}
+
+.login-header h1 {
+    font-size: 2em; color: var(--primary);
+    text-shadow: 0 0 15px var(--primary);
+    margin-bottom: 5px;
+}
+.login-header p {
+    font-family: var(--font-code); color: #8baec2; font-size: 0.8em; letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+/* Glass Box */
+.login-box {
+    background: var(--panel-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(0, 242, 255, 0.3);
+    padding: 40px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+}
+
+.input-group { text-align: left; margin-bottom: 20px; }
+.input-group label {
+    display: block; font-family: var(--font-code); color: var(--primary);
+    font-size: 0.8em; margin-bottom: 5px;
+}
+.input-group input {
+    width: 100%; padding: 10px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #333;
+    color: white; font-family: var(--font-code); font-size: 1.1em;
+    outline: none; transition: 0.3s;
+}
+.input-group input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 242, 255, 0.2); }
+
+/* Button */
+button {
+    width: 100%; padding: 15px;
+    background: rgba(0, 242, 255, 0.1);
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    font-family: var(--font-head); font-weight: bold; font-size: 1.2em;
+    cursor: pointer; transition: 0.3s; letter-spacing: 2px;
+}
+button:hover { background: var(--primary); color: black; box-shadow: 0 0 20px var(--primary); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.status-msg {
+    margin-top: 20px; font-family: var(--font-code); font-size: 0.9em; color: #888; height: 20px;
+}
+
+.footer-info {
+    margin-top: 30px; font-family: var(--font-code); font-size: 0.7em; color: #555;
+}

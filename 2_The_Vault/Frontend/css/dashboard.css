@@ -1,0 +1,222 @@
+/* --- VARIABLES --- */
+:root {
+    --bg-dark: #000;
+    /* HIGH TRANSPARENCY for Glass Effect */
+    --panel-bg: rgba(5, 10, 15, 0.45); 
+    /* Very faint borders */
+    --border: 1px solid rgba(0, 242, 255, 0.15);
+    --primary: #00f2ff; 
+    --alert: #ff0040;
+    --text-main: #e0f7ff;
+    --text-dim: #8baec2;
+    --font-head: 'Rajdhani', sans-serif;
+    --font-code: 'Share Tech Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-head);
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* --- 1. FULL SCREEN BACKGROUND VIDEO --- */
+#bg-video {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%; min-height: 100%;
+    width: auto; height: auto;
+    z-index: -2; /* Send to back */
+    opacity: 0.8; /* Adjust brightness of video */
+}
+
+/* Optional Mesh Overlay to make text readable */
+.scan-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 0%, #000 150%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* --- GLASS UI PANELS --- */
+.glass-panel {
+    background: var(--panel-bg);
+    backdrop-filter: blur(5px); /* Blurs the video slightly behind cards */
+    border: var(--border);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- GRID LAYOUT --- */
+.dashboard-container {
+    display: grid;
+    grid-template-columns: 80px 1fr 320px;
+    grid-template-rows: 70px 1fr;
+    height: 100vh;
+    gap: 15px;
+    padding: 15px;
+}
+
+/* Header */
+.top-bar {
+    grid-column: 1 / -1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 30px;
+}
+.logo { font-size: 2em; font-weight: 700; color: var(--primary); text-shadow: 0 0 10px var(--primary); }
+.server-status, .time-box { font-family: var(--font-code); display: flex; align-items: center; gap: 10px; }
+.status-light { width: 10px; height: 10px; background: var(--primary); border-radius: 50%; box-shadow: 0 0 10px var(--primary); }
+
+/* Sidebar */
+.sidebar {
+    grid-row: 2 / -1;
+    display: flex; flex-direction: column; align-items: center; padding-top: 20px; gap: 20px;
+}
+.nav-item {
+    width: 50px; height: 50px; display: flex; justify-content: center; align-items: center;
+    color: var(--text-dim); font-size: 1.2em; cursor: pointer; transition: 0.3s;
+    border: 1px solid transparent;
+}
+.nav-item:hover, .nav-item.active { color: var(--primary); background: rgba(0, 242, 255, 0.1); border-color: var(--primary); }
+.bottom { margin-top: auto; margin-bottom: 20px; }
+
+/* Main Grid */
+.main-grid {
+    grid-column: 2 / -1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 140px 1fr;
+    gap: 20px; height: 100%;
+}
+
+/* Cards */
+.card { padding: 20px; position: relative; overflow: hidden; }
+.metric-card { grid-row: 1; }
+.card-title { color: var(--text-dim); font-size: 0.9em; letter-spacing: 1px; margin-bottom: 5px; }
+.metric-value { font-size: 2.5em; font-weight: 700; color: white; text-shadow: 0 0 10px rgba(0,0,0,0.5); }
+.metric-bar { width: 100%; height: 4px; background: rgba(255,255,255,0.1); margin-top: 10px; }
+.fill { height: 100%; background: var(--primary); box-shadow: 0 0 10px var(--primary); transition: width 0.5s; }
+
+/* --- CENTRAL VIEWPORT (Map & Modals) --- */
+.viewport-section {
+    grid-column: 1 / 4; 
+    grid-row: 2;
+    background: #000;
+    position: relative;
+    overflow: hidden; 
+    min-height: 400px;
+    
+    /* CRITICAL FIX: Remove padding so video touches the borders */
+    padding: 0 !important; 
+    
+    /* Optional: Ensure border matches other panels */
+    border: 1px solid rgba(0, 242, 255, 0.3);
+}
+
+/* Video Styling - The "Cover" Fix */
+#map-video {
+    position: absolute;
+    top: 0; 
+    left: 0;
+    width: 100%; 
+    height: 100%;
+    
+    /* This forces the video to zoom/crop to fill the box perfectly */
+    object-fit: cover; 
+    
+    z-index: 1; 
+    opacity: 0.8; 
+}
+
+/* Grid Overlay on top of Video */
+.video-overlay {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: 
+        linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 2;
+    pointer-events: none; /* Let clicks pass through */
+}
+
+/* Header Correction */
+.card-header { 
+    position: absolute; top: 15px; left: 20px; 
+    font-weight: bold; background: rgba(0,0,0,0.8); 
+    padding: 5px 10px; border: 1px solid var(--primary); color: var(--primary); z-index: 10;
+}
+
+/* Modals */
+.modal-window {
+    display: none; z-index: 20;
+    flex-direction: column;
+    background: rgba(10, 15, 20, 0.85); /* Darker than cards for readability */
+}
+.modal-content { margin-top: 50px; width: 100%; font-family: var(--font-code); }
+.stat-row, .db-row, .alert-item { padding: 10px; margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.fake-graph { display: flex; gap: 10px; height: 100px; align-items: flex-end; margin-bottom: 20px; }
+.bar { width: 20px; background: var(--primary); opacity: 0.7; }
+.ok { color: #00ff00; float: right; }
+.high { border-left: 3px solid red; background: rgba(255,0,0,0.1); }
+
+/* Logs */
+.logs-section { grid-column: 4 / 5; grid-row: 1 / 3; display: flex; flex-direction: column; }
+.log-terminal { flex: 1; overflow-y: auto; margin-top: 15px; font-family: var(--font-code); font-size: 0.8em; }
+.log-entry { margin-bottom: 5px; border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-dim); }
+.log-entry span { color: var(--primary); margin-right: 5px; }
+
+/* --- HACKED MODE (Updated for Full Screen Video) --- */
+body.hacked { --primary: #ff0040; --border: 1px solid rgba(255, 0, 64, 0.5); }
+body.hacked .status-light { background: red; box-shadow: 0 0 20px red; animation: blink 0.2s infinite; }
+body.hacked .fill { background: red; }
+
+/* --- HACKED OVERLAY CONTAINER --- */
+#hacked-overlay {
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%;
+    
+    /* Default: Semi-transparent black so you can see dashboard behind it */
+    background: rgba(0, 0, 0, 0.85); 
+    
+    z-index: 9999;
+    
+    /* Center the progress video */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Show the overlay when hacked */
+body.hacked #hacked-overlay { 
+    display: flex; /* Changed from block to flex for centering */
+}
+
+/* --- VIDEO 1: PROGRESS (The Popup) --- */
+#vid-progress {
+    /* Make it look like a floating window, not full screen */
+    width: 60%; 
+    max-width: 800px;
+    height: auto;
+    
+    /* Add "Hacked" styling */
+    border: 2px solid red;
+    box-shadow: 0 0 100px rgba(255, 0, 0, 0.5);
+    border-radius: 10px;
+    background: black;
+}
+
+/* --- VIDEO 2: FINAL (Full Screen) --- */
+#vid-final {
+    /* Force full screen coverage */
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    z-index: 2; /* Sits on top of the progress bar */
+}
+
+@keyframes blink { 50% { opacity: 0; } }

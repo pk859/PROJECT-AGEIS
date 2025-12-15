@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>:: CYBER THREAT CONSOLE ::</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link rel="stylesheet" href="./css/console.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="bg"></canvas>
+
+    <div class="container">
+        <h1>CYBER THREAT CONSOLE<span class="cursor">_</span></h1>
+
+        <div class="metrics-grid">
+            <div class="metric-box">
+                <h2>Total Incidents</h2>
+                <p id="total-incidents">--</p>
+            </div>
+            <div class="metric-box">
+                <h2>Open Incidents</h2>
+                <p id="open-incidents">--</p>
+            </div>
+            <div class="metric-box critical">
+                <h2>Highest Risk Score</h2>
+                <p id="highest-risk">--</p>
+            </div>
+        </div>
+
+        <div class="targeting-container">
+            <h2>>> REAL-TIME THREAT ACQUISITION_</h2>
+            <div class="target-info">
+                <span class="label">TARGET IP:</span>
+                <span id="target-ip">-- ACQUIRING --</span>
+            </div>
+            <div class="trace-status">
+                <span class="label">TRACE STATUS:</span>
+                <span id="trace-status-text" class="blink-text">STANDBY...</span>
+            </div>
+            <div class="progress-bar-container">
+                <div id="trace-progress-bar"></div>
+            </div>
+        </div>
+        <div class="table-container">
+            <h2>>> INCOMING INCIDENT LOGS_</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Title</th>
+                        <th>Type</th>
+                        <th>System</th>
+                        <th>Source IP</th>
+                        <th>Risk</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="incident-table-body">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="./js/console.js"></script>
+    <script src="./js/matrix.js"></script>
+</body>
+</html>

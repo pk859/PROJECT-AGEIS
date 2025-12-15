@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS | SECURE ACCESS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video">
+        <source src="{{ url_for('static', filename='assests/background_animation.mp4') }}" type="video/mp4">
+    </video>
+    <div class="scan-overlay"></div>
+
+    <div class="login-container">
+        <div class="login-header">
+            <h1>/// AEGIS SECURITY GATEWAY</h1>
+            <p>RESTRICTED ACCESS // AUTHORIZED PERSONNEL ONLY</p>
+        </div>
+
+        <div class="login-box glass-panel">
+            <div class="input-group">
+                <label>OPERATOR ID</label>
+                <input type="text" id="username" placeholder="ENTER ID...">
+            </div>
+            <div class="input-group">
+                <label>ACCESS KEY</label>
+                <input type="password" id="password" placeholder="ENTER KEY...">
+            </div>
+            
+            <button onclick="attemptLogin()" id="login-btn">
+                <span class="btn-text">INITIALIZE LINK</span>
+                <span class="btn-glitch"></span>
+            </button>
+
+            <div id="login-msg" class="status-msg">WAITING FOR INPUT...</div>
+        </div>
+
+        <div class="footer-info">
+            SECURE CONNECTION v3.0 // ENCRYPTED
+        </div>
+    </div>
+
+    <script>
+        async function attemptLogin() {
+            const user = document.getElementById('username').value;
+            const pass = document.getElementById('password').value;
+            const msg = document.getElementById('login-msg');
+            const btn = document.getElementById('login-btn');
+
+            msg.innerText = "AUTHENTICATING...";
+            msg.style.color = "#00f2ff";
+            btn.disabled = true;
+
+            try {
+                const response = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: user, password: pass })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    msg.innerText = "ACCESS GRANTED. REDIRECTING...";
+                    msg.style.color = "#00ff00";
+                    setTimeout(() => {
+                        window.location.href = data.redirect;
+                    }, 1000);
+                } else {
+                    msg.innerText = "ACCESS DENIED: " + data.error;
+                    msg.style.color = "#ff0040";
+                    btn.disabled = false;
+                }
+            } catch (e) {
+                msg.innerText = "CONNECTION ERROR";
+                msg.style.color = "orange";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

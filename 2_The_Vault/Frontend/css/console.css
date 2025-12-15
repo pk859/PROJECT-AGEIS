@@ -1,0 +1,278 @@
+/* --- Corrected CSS for 3D Background Layering --- */
+
+:root {
+    /* EDITED: New blue and white color palette */
+    --bg-dark: #020a14;
+    --container-bg: rgba(1, 22, 39, 0.85);
+    --text-primary: #E0E0E0;      /* Primary text is now a light grey/white */
+    --accent-blue: #00BFFF;       /* A vibrant "Deep Sky Blue" for accents */
+    --text-yellow: #ffeb3b;
+    --text-red: #ff5252;
+    --border-color: var(--accent-blue); /* Borders will now be blue */
+
+    /* Transparent colors updated to use blue */
+    --box-bg-alpha: rgba(0, 191, 255, 0.08);
+    --box-shadow-alpha: rgba(0, 191, 255, 0.4);
+    --table-border-alpha: rgba(0, 191, 255, 0.2);
+    --table-hover-alpha: rgba(0, 191, 255, 0.15);
+}
+
+body {
+    background: radial-gradient(ellipse at center, 
+        rgba(0, 50, 100, 0.5) 0%, 
+        #020a14 70%
+    );
+    color: var(--text-primary); /* Use the new white/light grey */
+    font-family: 'Roboto Mono', monospace;
+    margin: 0;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+/* --- KEY FIXES FOR LAYERING --- */
+#bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container {
+    position: relative;
+    z-index: 1;
+    background-color: rgba(18, 18, 18, 0.85); 
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 20px var(--box-shadow-alpha);
+}
+/* --- END OF KEY FIXES --- */
+
+
+h1 {
+    color: var(--text-primary); /* Use the new white/light grey */
+    text-align: center;
+    letter-spacing: 4px;
+    text-shadow: 0 0 8px var(--accent-blue), 0 0 15px rgba(0, 191, 255, 0.7);
+    margin-bottom: 40px;
+    font-size: 2.8em;
+    position: relative;
+}
+
+.cursor {
+    animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+    from, to { color: transparent; }
+    50% { color: var(--text-primary); }
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin: 40px 0;
+}
+
+.metric-box {
+    border: 2px solid var(--border-color);
+    padding: 25px;
+    text-align: center;
+    background: var(--box-bg-alpha);
+    box-shadow: inset 0 0 15px var(--box-shadow-alpha);
+    border-radius: 5px;
+}
+
+.metric-box h2 {
+    margin-top: 0;
+    font-size: 1.3em;
+    color: var(--accent-blue);
+    letter-spacing: 1px;
+}
+
+.metric-box p {
+    font-size: 3em;
+    font-weight: bold;
+    margin: 10px 0 0;
+    text-shadow: 0 0 10px var(--accent-blue);
+}
+
+.metric-box.critical p {
+    color: var(--text-red);
+    text-shadow: 0 0 15px var(--text-red);
+    animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+    from { transform: scale(1); opacity: 1; }
+    to { transform: scale(1.05); opacity: 0.8; }
+}
+
+.table-container {
+    border: 2px solid var(--border-color);
+    padding: 25px;
+    margin-top: 40px;
+    background: var(--box-bg-alpha);
+    box-shadow: inset 0 0 15px var(--box-shadow-alpha);
+    border-radius: 5px;
+}
+
+.table-container h2 {
+    color: var(--accent-blue);
+    margin-top: 0;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--table-border-alpha);
+}
+
+th {
+    color: var(--accent-blue);
+    text-shadow: 0 0 5px rgba(0, 191, 255, 0.7);
+    font-weight: normal;
+    text-transform: uppercase;
+    font-size: 0.9em;
+}
+
+tbody tr:hover {
+    background-color: var(--table-hover-alpha);
+}
+
+@keyframes fadeInSlideUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.new-incident {
+    animation: fadeInSlideUp 0.5s ease-out;
+}
+
+.risk-low { color: var(--text-primary); } /* Low risk items are now white/light grey */
+.risk-medium { color: var(--text-yellow); }
+.risk-high { color: var(--text-red); font-weight: bold; }
+
+/* Glitch effect styles (if you have them) can remain here */
+h1::before,
+h1::after {
+    content: 'CYBER THREAT CONSOLE_';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--bg-dark);
+    overflow: hidden;
+}
+
+h1::before {
+    left: 2px;
+    text-shadow: -2px 0 var(--text-red);
+    animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+}
+
+h1::after {
+    left: -2px;
+    text-shadow: -2px 0 var(--accent-blue); /* Adjusted to new blue */
+    animation: glitch-anim-2 2.5s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+    0% { clip-path: inset(45% 0 50% 0); } 20% { clip-path: inset(60% 0 10% 0); } 40% { clip-path: inset(20% 0 45% 0); } 60% { clip-path: inset(70% 0 20% 0); } 80% { clip-path: inset(30% 0 60% 0); } 100% { clip-path: inset(55% 0 30% 0); }
+}
+
+@keyframes glitch-anim-2 {
+    0% { clip-path: inset(25% 0 60% 0); } 20% { clip-path: inset(5% 0 80% 0); } 40% { clip-path: inset(40% 0 30% 0); } 60% { clip-path: inset(80% 0 5% 0); } 80% { clip-path: inset(15% 0 70% 0); } 100% { clip-path: inset(50% 0 40% 0); }
+}
+
+
+/* --- CRT Scanline Overlay --- */
+body::before {
+    content: " ";
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.2),
+        rgba(0, 0, 0, 0.2) 1px,
+        transparent 1px,
+        transparent 2px
+    );
+    z-index: 2;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+}
+
+@keyframes flicker {
+    0% { opacity: 0.2; } 20% { opacity: 0.8; } 40% { opacity: 0.4; } 60% { opacity: 0.9; } 80% { opacity: 0.3; } 100% { opacity: 0.7; }
+}
+
+/* --- Targeting System Panel --- */
+.targeting-container {
+    border: 2px solid var(--accent-blue);
+    padding: 25px;
+    margin-top: 40px;
+    background: rgba(0, 191, 255, 0.08);
+    box-shadow: inset 0 0 15px rgba(0, 191, 255, 0.4);
+    border-radius: 5px;
+    color: var(--accent-blue);
+}
+.targeting-container h2 {
+    margin-top: 0;
+    letter-spacing: 2px;
+}
+.target-info, .trace-status {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+}
+.label {
+    font-weight: bold;
+    color: var(--accent-blue); /* Adjusted to new blue */
+}
+#target-ip {
+    color: var(--text-red);
+    font-weight: bold;
+}
+.blink-text {
+    animation: blink-fast 1.5s infinite;
+}
+@keyframes blink-fast {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+.progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--accent-blue);
+    border-radius: 5px;
+    overflow: hidden;
+}
+#trace-progress-bar {
+    width: 0%;
+    height: 100%;
+    background-color: var(--text-red);
+    transition: width 0.5s ease-out;
+}

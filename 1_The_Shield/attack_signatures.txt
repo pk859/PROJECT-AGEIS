@@ -1,0 +1,7 @@
+drop table
+union select
+<script>
+alert(
+/etc/passwd
+OR 1=1
+

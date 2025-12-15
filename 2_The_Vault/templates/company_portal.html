@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AEGIS | SOC Command Interface</title>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video">
+        <source src="{{ url_for('static', filename='assests/background_animation.mp4') }}" type="video/mp4">
+    </video>
+    <div class="scan-overlay"></div>
+
+    <div class="dashboard-container">
+        
+        <header class="top-bar glass-panel">
+            <div class="logo"><i class="fa-solid fa-shield-halved"></i> AEGIS <span>V.3.0</span></div>
+            <div class="server-status">
+                STATUS: <span id="status-text" class="status-ok">SECURE</span>
+                <div class="status-light"></div>
+            </div>
+            <div class="time-box" id="clock">00:00:00</div>
+        </header>
+
+        <nav class="sidebar glass-panel">
+            <div class="nav-item active" onclick="showModal('map-view')"><i class="fa-solid fa-globe"></i></div>
+            <div class="nav-item" onclick="showModal('analytics-view')"><i class="fa-solid fa-chart-line"></i></div>
+            <div class="nav-item" onclick="showModal('database-view')"><i class="fa-solid fa-database"></i></div>
+            <div class="nav-item" onclick="showModal('alerts-view')"><i class="fa-solid fa-triangle-exclamation"></i></div>
+            <div class="nav-item bottom"><i class="fa-solid fa-gear"></i></div>
+        </nav>
+
+        <main class="main-grid">
+            
+            <div class="card metric-card glass-panel">
+                <div class="card-title">TOTAL TRAFFIC</div>
+                <div class="metric-value">4.2 TB</div>
+                <div class="metric-bar"><div class="fill" style="width: 40%"></div></div>
+            </div>
+            <div class="card metric-card glass-panel">
+                <div class="card-title">THREATS BLOCKED</div>
+                <div class="metric-value" id="blocked-count">8,432</div>
+                <div class="metric-bar"><div class="fill" style="width: 85%"></div></div>
+            </div>
+            <div class="card metric-card glass-panel">
+                <div class="card-title">SERVER UPTIME</div>
+                <div class="metric-value">99.99%</div>
+                <div class="metric-bar"><div class="fill" style="width: 99%"></div></div>
+            </div>
+            <div class="card metric-card glass-panel">
+                <div class="card-title">SYSTEM HEALTH</div>
+                <div class="metric-value" id="health-val">100%</div>
+                <div class="metric-bar"><div class="fill" id="health-bar" style="width: 100%"></div></div>
+            </div>
+
+            <div class="card viewport-section glass-panel" id="map-view">
+                <div class="card-header">GLOBAL THREAT MAP <span class="blink">/// LIVE</span></div>
+                <video autoplay muted loop id="map-video">
+                    <source src="{{ url_for('static', filename='assests/map_animation.mp4') }}" type="video/mp4">
+                </video>
+                <div class="video-overlay"></div>
+            </div>
+
+            <div class="card viewport-section glass-panel modal-window" id="analytics-view">
+                <div class="card-header">TRAFFIC ANALYTICS</div>
+                <div class="modal-content">
+                    <h3>PACKET VOLUME</h3>
+                    <div class="fake-graph">
+                        <div class="bar" style="height:40%"></div>
+                        <div class="bar" style="height:70%"></div>
+                        <div class="bar" style="height:50%"></div>
+                        <div class="bar" style="height:90%"></div>
+                        <div class="bar" style="height:60%"></div>
+                    </div>
+                    <div class="stat-row"><span>HTTP REQ:</span> <b id="http-stat">43,201/s</b></div>
+                    <div class="stat-row"><span>SQL QUERY:</span> <b id="sql-stat">1,200/s</b></div>
+                </div>
+            </div>
+
+            <div class="card viewport-section glass-panel modal-window" id="database-view">
+                <div class="card-header">DATABASE INTEGRITY</div>
+                <div class="modal-content">
+                    <div class="db-row"><span>USER_TABLE</span> <span class="ok">SYNCED</span></div>
+                    <div class="db-row"><span>ADMIN_LOGS</span> <span class="ok">ENCRYPTED</span></div>
+                    <div class="db-row"><span>PAYMENTS</span> <span class="ok">SECURE</span></div>
+                </div>
+            </div>
+
+            <div class="card viewport-section glass-panel modal-window" id="alerts-view">
+                <div class="card-header">ACTIVE ALERTS</div>
+                <div class="modal-content">
+                    <div class="alert-item high">CRITICAL: PORT 22 PING FLOOD</div>
+                    <div class="alert-item mid">WARNING: FAILED LOGIN (ADMIN)</div>
+                </div>
+            </div>
+
+            <div class="card logs-section glass-panel">
+                <div class="card-header">>> REAL-TIME LOGS</div>
+                <div class="log-terminal" id="log-feed"></div>
+            </div>
+
+        </main>
+    </div>
+
+    <div id="hacked-overlay">
+        <video muted id="vid-progress" class="overlay-video">
+            <source src="{{ url_for('static', filename='assests/system_hacking.mp4') }}" type="video/mp4">
+        </video>
+        
+        <video muted loop id="vid-final" class="overlay-video" style="display:none;">
+            <source src="{{ url_for('static', filename='assests/system_hacked.mp4') }}" type="video/mp4">
+        </video>
+
+        <video muted loop id="vid-breach" class="overlay-video" style="display:none;">
+            <source src="{{ url_for('static', filename='assests/data_breach.mp4') }}" type="video/mp4">
+        </video>
+
+        
+    </div>
+
+
+
+    <div id="blocked-popup" class="popup-overlay">
+    <div class="popup-content">
+        <img src="" alt="ACCESS DENIED" id="popup-image">
+    </div>
+</div>
+    
+
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script>
+        // Check if the page was reloaded
+        if (window.performance) {
+            const navEntries = window.performance.getEntriesByType("navigation");
+            if (navEntries.length > 0 && navEntries[0].type === "reload") {
+                // If it was a reload, redirect to Login Page
+                window.location.href = "/";
+            }
+        }
+    </script>
+</body>
+</html>
