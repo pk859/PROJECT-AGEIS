@@ -163,25 +163,39 @@ async function checkSystemHealth() {
     } catch (e) {}
 }
 
-// --- RASP ALERT SYSTEM ---
+// --- RASP ALERT SYSTEM (SMART VERSION) ---
 let raspAlertActive = false;
+let lastKnownLogId = null; // Stores the ID of the last log we saw
 
 async function checkRaspStatus() {
     try {
-        // We check the latest incident to see if RASP fired
         const response = await fetch('/incidents');
         const data = await response.json();
         
         if (data.length > 0) {
-            const latest = data[0];
-            // If the latest log is our RASP Alert and it's fresh (created recently)
-            if (latest.title.includes("RASP ALERT") && !raspAlertActive) {
-                showAccessDenied();
+            const latest = data[0]; // The newest log entry
+
+            // 1. FIRST LOAD: Just memorize the current ID, don't scream yet.
+            if (lastKnownLogId === null) {
+                lastKnownLogId = latest.id;
+                return;
+            }
+
+            // 2. NEW LOG DETECTED: Is this ID newer than what we saw last?
+            if (latest.id > lastKnownLogId) {
+                lastKnownLogId = latest.id; // Update our memory
+
+                // 3. CHECK IF IT IS A RASP ALERT
+                // (Matches the title you set in app.py logic)
+                if ((latest.title.includes("RASP") || latest.title.includes("WAF")) && !raspAlertActive) {
+                    showAccessDenied();
+                }
             }
         }
-    } catch (e) {}
+    } catch (e) {
+        console.log("Connection issue, skipping check...");
+    }
 }
-
 function showAccessDenied() {
     raspAlertActive = true;
     

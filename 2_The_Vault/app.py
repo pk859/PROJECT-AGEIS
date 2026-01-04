@@ -132,7 +132,7 @@ def user_search():
     
     try:
         # RAW F-STRING SQL INJECTION
-        unsafe_sql = f"SELECT * FROM incidents WHERE title LIKE '%{search_term}%'"
+        unsafe_sql = f"SELECT * FROM users WHERE username LIKE '%{search_term}%'"
         print(f"⚠️  EXECUTING UNSAFE SQL: {unsafe_sql}")
         
         cursor.execute(unsafe_sql)

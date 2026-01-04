@@ -1,4 +1,4 @@
-# 🛡️ Project AEGIS - Adaptive Enterprise Guard & Intelligent Shield
+# Project AEGIS - Adaptive Enterprise Guard & Intelligent Shield
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue?logo=python) ![Flask](https://img.shields.io/badge/Flask-2.0-black?logo=flask) ![MariaDB](https://img.shields.io/badge/MariaDB-10.6%2B-blue?logo=mariadb) ![Security](https://img.shields.io/badge/Security-RASP%20%2B%20WAF-green) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6%2B-yellow?logo=javascript)
 
@@ -6,39 +6,46 @@ A next-generation "Purple Team" cybersecurity simulation demonstrating the limit
 
 ---
 
-## 🚀 Live Demo
+## Live Demo
+> "The firewall is just the first line of defense. The real battle happens inside."
 
-*(It is highly recommended to record a short GIF of your terminal showing the "Firewall Bypassed" green text and place it here. This creates an instant visual hook.)*
+**Accessing The Vault Mainframe...**
+**Credentials Verified.**
 
-![Demo GIF](demo.gif)
+Watch the AEGIS protocol in action: detecting anomalies, neutralizing threats in memory, and deploying active deception.
+
+https://github.com/user-attachments/assets/8909933a-ccab-4bcd-b53d-71db839195eb
+
+
+
 
 ---
 
-## 📖 Introduction
+## Introduction
 
 In traditional cybersecurity, organizations rely heavily on "Perimeter Defense" (Firewalls/WAFs) to keep attackers out. But what happens when the firewall fails, or the threat is already inside? **Project AEGIS** was built to answer this question.
 
-This project simulates a realistic banking infrastructure ("The Vault") where a sophisticated attacker bypasses the outer Web Application Firewall (WAF) using direct-access techniques. However, instead of succeeding, the attacker is neutralized by an internal **Runtime Application Self-Protection (RASP)** system. The system doesn't just block the attack—it deploys a **Honeypot**, feeding the attacker fake credentials to deceive them while logging their forensic data.
+This project simulates a realistic banking infrastructure ("The Vault") where a sophisticated attacker bypasses the outer Web Application Firewall (WAF) using direct-access techniques. However, instead of succeeding, the attacker is neutralized by an internal **Runtime Application Self-Protection (RASP)** system. The system doesn't just block the attack it deploys a **Honeypot**, feeding the attacker fake credentials to deceive them while logging their forensic data.
 
 ---
 
-## ✨ Key Features
+## Key Features
 
 This project demonstrates a full "Cyber Kill Chain" simulation with advanced defensive countermeasures:
 
-* **🛡️ Custom Web Application Firewall (WAF):** A Python-based perimeter shield running on Port 8000. It uses signature-based detection to identify and block common SQL Injection (`OR 1=1`) and Remote Code Execution payloads before they reach the application.
+* ** Custom Web Application Firewall (WAF):** A Python-based perimeter shield running on Port 8000. It uses signature-based detection to identify and block common SQL Injection (`OR 1=1`) and Remote Code Execution payloads before they reach the application.
 
-* **⚡ Runtime Application Self-Protection (RASP):** The core innovation of AEGIS. Unlike a firewall, this internal protection system hooks into the application's memory. It detects malicious logic *during execution*, offering protection even if the firewall is completely bypassed.
+* ** Runtime Application Self-Protection (RASP):** The core innovation of AEGIS. Unlike a firewall, this internal protection system hooks into the application's memory. It detects malicious logic *during execution*, offering protection even if the firewall is completely bypassed.
 
-* **🪤 Active Deception (Honeypot):** Instead of simply blocking a detected intruder, the system serves them plausible but fake data (e.g., `sys_admin` credentials). This wastes the attacker's time and tricks them into revealing their techniques without compromising real data.
+* ** Active Deception (Honeypot):** Instead of simply blocking a detected intruder, the system serves them plausible but fake data (e.g., `sys_admin` credentials). This wastes the attacker's time and tricks them into revealing their techniques without compromising real data.
 
-* **⚔️ Automated "Smart Breach" Protocol:** A custom Red Team script (`smart_breach.py`) that intelligently probes the network. It attempts to attack the Firewall first, and upon failure, automatically shifts tactics to exploit open backdoors (Port 5000).
+* ** Automated "Smart Breach" Protocol:** A custom Red Team script (`smart_breach.py`) that intelligently probes the network. It attempts to attack the Firewall first, and upon failure, automatically shifts tactics to exploit open backdoors (Port 5000).
 
-* **🖥️ Live Command Dashboard:** A real-time web interface that visualizes the battle. It displays system health, attack geolocation, and flashes alerts when the RASP system intercepts a threat.
+* ** Live Command Dashboard:** A real-time web interface that visualizes the battle. It displays system health, attack geolocation, and flashes alerts when the RASP system intercepts a threat.
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 | Category | Technology |
 | :--- | :--- |
@@ -49,7 +56,7 @@ This project demonstrates a full "Cyber Kill Chain" simulation with advanced def
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 The application follows a "Defense-in-Depth" workflow with two distinct attack paths:
 
@@ -61,7 +68,7 @@ The application follows a "Defense-in-Depth" workflow with two distinct attack p
 
 ---
 
-## 🚀 Getting Started
+##  Getting Started
 
 To get a local copy up and running, follow these simple steps.
 
@@ -116,7 +123,7 @@ To get a local copy up and running, follow these simple steps.
 
 ---
 
-## 🔮 Future Scope
+##  Future Scope
 
 This project provides a strong foundation for a commercial-grade security tool. Future enhancements could include:
 * **AI Anomaly Detection:** Implement Machine Learning to detect attacks based on behavioral patterns rather than static signatures.
